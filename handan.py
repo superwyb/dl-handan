@@ -3,9 +3,10 @@
 import jieba
 import numpy
 
+handan_dict = {}
+
 
 def get_raw_tuple(file_name):
-    dict = {}
     with open(file_name) as f:
         lines = f.readlines()
     i = 0
@@ -14,19 +15,17 @@ def get_raw_tuple(file_name):
     for line in lines:
         if i == 0:
             i = 1
-            # text_list.append(line)
             seg_list = jieba.cut(line)
             seg_id_list = []
             for seg in seg_list:
-                if seg in dict:
-                    dict[seg]["freq"] += 1
+                if seg in handan_dict:
+                    handan_dict[seg]["freq"] += 1
                 else:
-                    dict[seg] = {}
-                    dict[seg]["id"] = len(dict)
-                    dict[seg]["freq"] = 1
-                seg_id_list.append(dict[seg]["id"])
+                    handan_dict[seg] = {}
+                    handan_dict[seg]["id"] = len(handan_dict)
+                    handan_dict[seg]["freq"] = 1
+                seg_id_list.append(handan_dict[seg]["id"])
             text_list.append(seg_id_list)
-            # print("|".join(seg_list))
         else:
             i = 0
             category_list.append(int(line.strip()))
@@ -34,8 +33,9 @@ def get_raw_tuple(file_name):
     return text_list, category_list
 
 
-def load_data():
-    jieba.load_userdict('dict.txt')
+def load_data(include_dict=True):
+    if include_dict:
+        jieba.load_userdict('dict.txt')
     (train_x_raw, train_y_raw) = get_raw_tuple('handan-train.txt')
     (test_x_raw, test_y_raw) = get_raw_tuple('handan-test.txt')
     x_train = numpy.array(train_x_raw)

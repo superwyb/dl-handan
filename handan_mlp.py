@@ -15,7 +15,7 @@ batch_size = 32
 epochs = 5
 
 print('Loading data...')
-(x_train, y_train), (x_test, y_test) = handan.load_data()
+(x_train, y_train), (x_test, y_test) = handan.load_data(False)
 print(len(x_train), 'train sequences')
 print(len(x_test), 'test sequences')
 
