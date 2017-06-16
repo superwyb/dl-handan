@@ -57,3 +57,6 @@ score = model.evaluate(x_test, y_test,
                        batch_size=batch_size, verbose=1)
 print('Test score:', score[0])
 print('Test accuracy:', score[1])
+
+result = model.predict(x_test, batch_size=batch_size, verbose=1)
+print(result)
