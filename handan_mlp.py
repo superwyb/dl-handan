@@ -67,7 +67,7 @@ y_test_list = np.fromiter([np.argmax(r) for r in y_test], int)
 print(result_list)
 print(y_test_list)
 
-for i in xrange(0, len(y_test_list)):
+for i in range(0, len(y_test_list)):
     if not result_list[i] == y_test_list[i]:
         print(i)
         print(test_x_lines[i], y_test_list[i], result_list[i])
