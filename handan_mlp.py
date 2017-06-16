@@ -15,7 +15,7 @@ batch_size = 32
 epochs = 5
 
 print('Loading data...')
-(x_train, y_train), (x_test, y_test) = handan.load_data(False)
+(x_train, y_train), (x_test, y_test), (train_x_lines, test_x_lines) = handan.load_data(False)
 print(len(x_train), 'train sequences')
 print(len(x_test), 'test sequences')
 
@@ -59,4 +59,16 @@ print('Test score:', score[0])
 print('Test accuracy:', score[1])
 
 result = model.predict(x_test, batch_size=batch_size, verbose=1)
-print(result)
+# vfunc = np.vectorize(np.argmax)
+# print(vfunc(result))
+
+result_list = np.fromiter([np.argmax(r) for r in result], int)
+y_test_list = np.fromiter([np.argmax(r) for r in y_test], int)
+print(result_list)
+print(y_test_list)
+
+for i in xrange(0, len(y_test_list)):
+    if not result_list[i] == y_test_list[i]:
+        print(i)
+        print(test_x_lines[i], y_test_list[i], result_list[i])
+        print(result[i])
